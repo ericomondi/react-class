@@ -1,9 +1,13 @@
 
 import React from 'react';
 
-const HomeUpdate = () => {
+type propType = {
+ourSate: number
+}
+
+const HomeUpdate = (ourState: number) => {
   return (
-    <h1>NEw Component</h1>  );
+    <div>Our State {ourState}</div>  );
 };
 
 export default HomeUpdate;

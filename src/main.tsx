@@ -1,49 +1,17 @@
-// import React from "react";
-// import ReactDOM from "react-dom/client";
-// import TodoApp from "./components/TodoApp.tsx";
-// import Home from "./components/Home.tsx";
-// import "./index.css";
-// import { createBrowserRouter, RouterProvider } from "react-router-dom";
-// import Navbar from "./components/Navbar.tsx";
-
-// const router = createBrowserRouter([
-//   {
-//     path: "/",
-//     element: <Home />,
-//   },
-//   {
-//     path: "/todo",
-//     element: <TodoApp />,
-//   },
-// ]);
-
-// ReactDOM.createRoot(document.getElementById("root")!).render(
-//   <React.StrictMode>
-//     <Navbar />
-//     <RouterProvider router={router} />
-//   </React.StrictMode>
-// );
-
-
 import React from "react";
-import ReactDOM from "react-dom";
-import TodoApp from "./components/TodoApp.tsx";
-import Home from "./components/Home.tsx";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import Navbar from "./components/Navbar.tsx";
-import ContacUS from "./components/ContactUS.tsx";
+import ReactDOM from "react-dom/client";
+import { BrowserRouter } from "react-router-dom";
+import App from "./App.tsx";
+import "./index.css";
+import { Provider } from "react-redux";
+import store from "./store/index.ts";
 
-ReactDOM.render(
+ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
-    <Router>
-      <Navbar />
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/todo" element={<TodoApp />} />
-        <Route path="/contact-us" element={<ContacUS />} />
-      </Routes>
-    </Router>
-  </React.StrictMode>,
-  document.getElementById("root")
+    <BrowserRouter>
+      <Provider store={store}>
+        <App />
+      </Provider>
+    </BrowserRouter>
+  </React.StrictMode>
 );
-

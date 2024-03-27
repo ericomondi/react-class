@@ -73,3 +73,23 @@ button:focus-visible {
 .custom-badge {
   color: black; /* Set the color you want */
 }
+
+
+.layout{
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.layout-header{
+  background-color: grey;
+  color: white;
+  padding: 20px 0px;
+}
+
+/* .layout-header nav ul {
+  list-style: none;
+  text-align: center;
+  display: flex;
+} */
+

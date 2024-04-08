@@ -1,14 +1,15 @@
 import { SET_AUTHENTICATED } from "./type";
 
-export type AuthType = {
-    name: string;
-    isLoggedIn: boolean;
+// Define the interface for the authentication payload
+interface AuthType {
+    name: string; // Define the type for the 'name' property
+    isLoggedIn: boolean; // Define the type for the 'isLoggedIn' property
 }
 
-export const setAuthentication = (isAuthenticated: AuthType) => (
-    {
+// Action creator function
+export const setAuthentication = (isAuthenticated: AuthType) => {
+    return {
         type: SET_AUTHENTICATED,
-        payload: isAuthenticated
-    }
-
-)
+        isAuthenticated: isAuthenticated
+    };
+};

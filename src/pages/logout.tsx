@@ -1,24 +1,24 @@
-import React from 'react';
-import { useDispatch } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
-import { setAuthentication } from '../store/authAction';
+import React from "react";
+import { useNavigate } from "react-router-dom";
 
-const Logout: React.FC = () => {
-  const dispatch = useDispatch();
-  const navigate = useNavigate(); 
+const Logout = () => {
+    const navigate = useNavigate();
 
-  const handleLogout = () => {
-    dispatch(setAuthentication({ name: '', isLoggedIn: false }));
-    navigate('/login'); 
-  };
+    const handleLogout = (e: React.MouseEvent<HTMLButtonElement>) => {
+        e.preventDefault();
+        // Clearing the local storage
+        localStorage.removeItem('token');
+        localStorage.removeItem('isLoggedIn');
 
-  return (
-    <div>
-      <h2>Logout</h2>
-      <p>Are you sure you want to logout?</p>
-      <button onClick={handleLogout}>Logout</button>
-    </div>
-  );
+        // Navigating to the login page after clearing the local storage
+        navigate("/login");
+    };
+    return (
+        <div>
+            <h1>Logging Out...</h1>
+            <button onClick={handleLogout}>Logout</button>
+        </div>
+    );
 };
 
 export default Logout;

@@ -1,41 +1,81 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-import { setAuthentication, AuthType } from "../store/authAction"; // assuming AuthType is imported from authAction
+import axios from "axios";
+import {  setAuthentication } from "../store/authAction";
 
-function Login(){
+import { useNavigate } from "react-router-dom";
 
-    const dispatch = useDispatch();
+interface AuthType {
+  username: string;
+  password: string;
+}
+interface ResponseData {
+  access_token: string;
+}
 
-    const [form, setForm] = useState({
-        name:""
-    });
+function Login() {
+  // const dispatch = useDispatch();
+  const navigate = useNavigate();
 
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setForm({
-            name: e.target.value
-        });
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  const handleSubmit = async (e: any) => {
+    e.preventDefault();
+    let formContent: AuthType = {
+      username: username,
+      password: password,
+    };
+    try {
+      const apiUrl = "http://127.0.0.1:5000/login";
+      const response = await axios.post(apiUrl, formContent, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      console.log("Done.", response.data);
+      const responseData: ResponseData = response.data;
+      console.log("test", responseData);
+      localStorage.setItem("token", responseData.access_token);
+      localStorage.setItem("isLoggedIn", true.toString()); //  login status to local storage
+
+      // dispatch(setAuthentication(formContent));
+
+      setIsLoggedIn(true);
+      navigate("/about");
+    } catch (error) {
+      console.error(error);
     }
+  };
 
-    const handleSubmit =(e: React.FormEvent<HTMLFormElement>) =>{
-        e.preventDefault();
-        
-        const outcome: AuthType = {
-            name: form.name,
-            isLoggedIn: true
-        };
-
-        dispatch(setAuthentication(outcome));
-    }
-
-    return(
-        <div>
-            <form className="text-black" onSubmit={handleSubmit}>
-                <input type="email" className="font-bold border border-black rounded-lg m-4 p-4" name="email" placeholder="email" required onChange={handleChange}/>
-                <input type="password" className="font-bold border border-black rounded-lg m-4 p-4" name="password" placeholder="password" />
-                <button type="submit" className="border-blue-900 p-5 m-5">Submit</button>
-            </form>
-        </div>
-    )
+  return (
+    <div>
+      <h2>Login</h2>
+      <form onSubmit={handleSubmit}>
+        <label>
+          Username:
+          <input
+            type="text"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+          />
+        </label>
+        <br />
+        <label>
+          Password:
+          <input
+            type="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+        </label>
+        <br />
+        <button type="submit">Login</button>
+      </form>
+      {isLoggedIn && <p>Welcome, {username}!</p>}
+    </div>
+  );
 }
 
 export default Login;

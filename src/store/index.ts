@@ -1,12 +1,12 @@
-import { createStore, combineReducers } from "redux";
+import { combineReducers, createStore } from "@reduxjs/toolkit";
 import authReducer from "./reducer";
 
-// Define your root reducer
-const rootReducer = combineReducers({
-  auth: authReducer
-});
+const rootReducer= combineReducers({
+    auth:authReducer
+})
 
-// Create the Redux store with the root reducer
-const store = createStore(rootReducer,);
+const store =createStore(
+    rootReducer,
+)
 
-export default store;
+export default store
